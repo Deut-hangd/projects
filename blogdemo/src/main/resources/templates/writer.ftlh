@@ -43,7 +43,7 @@
                         <form class="form-inline" action="/c/add" method="post">
                             <div class="form-group mb-2">
                                 <label for="category" class="sr-only">类别</label>
-                                <input type="text" class="form-control" id="category" name="name" placeholder="请填写类别">
+                                <input type="text" class="form-control" id="category" name="name" placeholder="请填写类别" required="">
                             </div>
                             <button type="submit" class="ml-2 btn btn-outline-secondary mb-2">新建</button>
                         </form>
@@ -67,6 +67,7 @@
                             <th scope="col">标题</th>
                             <th scope="col">阅读量</th>
                             <th scope="col">修改</th>
+                            <th scope="col">删除</th>
                         </thead>
                         <tbody>
                             <#list articleList as article>
@@ -75,6 +76,7 @@
                                 <td>${article.title}</td>
                                 <td>${article.viewCount}</td>
                                 <td><a href="/writer/forward/2/${article.id}/editor">修改</a></td>
+                                <td><a href="/delete/${article.id}">删除</a></td>
                             </tr>
                             </#list>
                           </tbody>

@@ -11,6 +11,7 @@
                 background-image: url(/images/email-pattern.png);
             }
 
+
             nav {
                 border-bottom: 1px solid rgba(0, 0, 0, 0.3);
             }
@@ -66,6 +67,7 @@
             .about {
                 line-height: 180px;
             }
+
         </style>
     </head>
 
@@ -93,7 +95,6 @@
         <main role="main">
             <div class="container">
                 <div class="row">
-
                     <#list articleList as article>
                     <div class="col-4 mt-3">
                         <div class="card">
@@ -111,7 +112,7 @@
                                 </div>
 
                                 <p class="card-text text-truncate">${article.content}</p>
-                                
+
                                 <div class="statistics-area">
                                     <i class="fa fa-eye"></i> ${article.viewCount}
                                     <i class="fa fa-comments-o"></i> ${article.commentCount}

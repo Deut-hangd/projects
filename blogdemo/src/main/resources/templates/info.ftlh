@@ -45,13 +45,20 @@
         <div class="container">
             <img src="${article.coverImage}" class="cover-image mb-3">
             <h1 class="text-center">${article.title}</h1>
-            <div class="author-area">
+            <div class="row">
+                <div class="col-4">
+                    <button class="ml-2 btn btn-outline-secondary mb-2"><a href="/">首页</a></button>
+                </div>
+            </div>
+
+            <div class="row">
+            <div class="col-8 author-area">
                 <a>
                     <img src="${article.author.avatar}" class="avatar">
                     <p class="author">${article.author.nickname}</p>
                 </a>
             </div>
-
+            </div>
             <div class="statistics-area mt-3 mb-3">
                 <i class="fa fa-eye"></i> ${article.viewCount}
                 <i class="fa fa-comments-o"></i> ${article.commentCount}
@@ -63,7 +70,7 @@
             <#if user??>
             <form class="form-inline mb-3" method="post" action="/a/${article.id}/comments">
                 <div class="form-group">
-                    <input type="text" id="content" name="content" form-control placeholder="评论" style="width: 400px;">
+                    <input type="text" id="content" name="content" class ="form-control" placeholder="评论" style="width: 400px;">
                 </div>
                 <button type="submit" class="ml-3 btn btn-outline-secondary">提交</button>
             </form>

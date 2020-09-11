@@ -11,6 +11,10 @@
                 margin-top: 15px;
                 background-image: url(/images/email-pattern.png);
             }
+
+            a{
+                color: white;
+            }
         </style>
     </head>
     <body>
@@ -27,6 +31,10 @@
                     </div>
                     <div class="col">
                         <input id="title" name="title" value="<#if type==2>${article.title}</#if>" type="text" class="form-control" placeholder="标题">
+                    </div>
+                    <div class="col-1 text-right">
+                        <button type="submit" class="btn btn-primary">
+                            <a href="/writer" class="">返回</a></button>
                     </div>
                     <div class="col-1 text-right">
                         <button type="submit" class="btn btn-primary">发布</button>

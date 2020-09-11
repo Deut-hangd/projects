@@ -58,9 +58,10 @@
         <form class="form-signin" method="post" action="/login">
             <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
             <label for="username" class="sr-only">用户名</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required="" autofocus="">
+            <input type="text" id="username" name="username" class="form-control" placeholder="用户名" autofocus="">
             <label for="password" class="sr-only">密码</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="密码" required="">
+            <input type="password" id="password" name="password" class="form-control" placeholder="密码">
             <button class="btn btn-lg btn-outline-secondary btn-block" type="submit">登录</button>
+            <a href="/register">立即注册</a>
     </body>
 </html>
