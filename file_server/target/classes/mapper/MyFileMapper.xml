@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zero.mapper.MyFileMapper">
+  <resultMap id="BaseResultMap" type="org.zero.model.MyFile">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="size" jdbcType="BIGINT" property="size" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="save_address" jdbcType="VARCHAR" property="saveAddress" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from my_file
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.zero.model.MyFile">
+    insert into my_file (id, name, size, 
+      type, save_address, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, 
+      #{type,jdbcType=VARCHAR}, #{saveAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.zero.model.MyFile">
+    update my_file
+    set name = #{name,jdbcType=VARCHAR},
+      size = #{size,jdbcType=BIGINT},
+      type = #{type,jdbcType=VARCHAR},
+      save_address = #{saveAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, name, size, type, save_address, create_time
+    from my_file
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, size, type, save_address, create_time
+    from my_file
+  </select>
+</mapper>

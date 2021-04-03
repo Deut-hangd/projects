@@ -1,0 +1,42 @@
+// 下载本地文件
+    public void download(String id, HttpServletResponse response) {
+        // 依据UUID查询数据库, 获取文件元信息
+        MyFile myFile = myFileMapper.selectByPrimaryKey(id);
+        // 指定的时间格式获取文件所在目录
+        String dirName = DF.format(myFile.getCreateTime());
+        // 拼接合成文件的完整本地目录
+        String fileName = fileLocalPath + "/" + dirName + "/" + id + "." + myFile.getType();
+        DataInputStream dataInputStream = null;
+        DataOutputStream dataOutputStream = null;
+        // 打开文件的读取流
+        try {
+            dataInputStream = new DataInputStream(new FileInputStream(new File(fileName)));
+            byte[] data = new byte[dataInputStream.available()];
+            String diskFileName = myFile.getName() + myFile.getType();
+            // 设置响应头和响应体
+            response.setContentType("application/octet-stream;");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + diskFileName + "\"");
+            response.setContentLength(data.length);
+            response.setHeader("Content-Range", "" + Integer.valueOf(data.length - 1));
+            response.setHeader("Accept-Ranges", "bytes");
+            response.setHeader("File-Type", myFile.getType());
+            // 获取响应输出流
+            dataOutputStream = new DataOutputStream(response.getOutputStream());
+            int bytes = 0;
+            // 数据缓冲区
+            byte[] bufferOut = new byte[1024];
+            // 读取并保存文件数据
+            while ((bytes = dataInputStream.read(bufferOut)) != -1) {
+                dataOutputStream.write(bufferOut, 0, bytes);
+            }
+            // 刷新数据输出流
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            // 设置响应状态码为 410
+            response.setStatus(410);
+            throw new RuntimeException(e);
+        } finally {
+            close(dataInputStream, dataOutputStream);
+        }
+
+    }

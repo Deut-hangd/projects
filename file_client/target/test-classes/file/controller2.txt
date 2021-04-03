@@ -1,0 +1,11 @@
+@GetMapping("/welcome")
+    public String welcome(HttpServletResponse response) {
+        return "";
+    }
+
+    // 控制文件上传
+    @PostMapping("/upload")
+    public Object uploadFile(@RequestParam("filename")MultipartFile[] file) {
+        // 上传文件
+        return filesService.upload(file);
+    }

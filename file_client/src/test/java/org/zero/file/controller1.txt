@@ -1,0 +1,14 @@
+// 控制文件下载
+    @GetMapping("/download/{id}")
+    public Object download(@PathVariable String id, HttpServletResponse response) {
+        // 下载服务器本地文件到客户端
+        filesService.download(id, response);
+        return null;
+    }
+
+    // 获取文件元信息
+    @GetMapping("/get/{id}")
+    public Object selectMetaInfo(@PathVariable String id) {
+        // 根据 URL 提供的 id 查询数据库中的数据
+        return filesService.selectMetaInfo(id);
+    }

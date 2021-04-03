@@ -1,0 +1,29 @@
+// 获取文件的元信息
+    public Object selectMetaInfo(String id) {
+        // 根据文件的 UUID 查询数据库中的一条记录(即文件元信息)
+        return myFileMapper.selectByPrimaryKey(id);
+    }
+
+
+    // 关闭流
+    private void close (InputStream inputStream, OutputStream outputStream) {
+        // 关闭输入流
+        try {
+            if (inputStream != null) {
+                inputStream.close();
+                inputStream = null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 关闭输出流
+        try {
+            if (outputStream != null) {
+                outputStream.close();
+                outputStream = null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }

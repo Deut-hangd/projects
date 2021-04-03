@@ -1,0 +1,62 @@
+// 开启事务, 所有文件成功插入数据库, 则 commit, 否则 rollback
+    @Transactional
+    public List<String> upload(MultipartFile[] file) {
+        List<String> idList = new ArrayList<>(file.length);
+        // 循环保存所有文件
+        for (int i = 0; i < file.length; i++) {
+            // 未成功获取的文件, 不进行处理
+            if ("".equals(file[i].getOriginalFilename())) {
+                continue;
+            }
+            // 生成 UUID, 即唯一文件名
+            idList.add(UUID.randomUUID().toString());
+            // 获取当前时间
+            Date date = new Date();
+            // 拼接文件的本地保存目录
+            String dirUrl = fileLocalPath + "/" + DF.format(date);
+            File saveFile = new File(dirUrl);
+            // 若文件的本地保存目录不存在, 则创建该目录结构
+            if (!saveFile.exists()) saveFile.mkdirs();
+            // 获取文件后缀起始位置
+            int indexOfSuffix = file[i].getOriginalFilename().lastIndexOf(".");
+            String suffix = null;
+            if (indexOfSuffix != -1) {
+                // 获取文件后缀
+                suffix = file[i].getOriginalFilename()
+                        .substring(indexOfSuffix);
+            }
+            // 结合 UUID 生成新的文件名, 以保证文件名唯一
+            String fileName = dirUrl + "/" + idList.get(i) + suffix;
+            DataInputStream dataInputStream = null;
+            DataOutputStream dataOutputStream = null;
+            // 将文件保存到本地
+            try {
+                // 打开数据输入输出流
+                InputStream j = file[i].getInputStream();
+                dataInputStream = new DataInputStream(file[i].getInputStream());
+                dataOutputStream = new DataOutputStream(new FileOutputStream(new File(fileName)));
+                int bytes = 0;
+                // 数据缓冲区
+                byte[] bufferOut = new byte[1024];
+                while ((bytes = dataInputStream.read(bufferOut)) != -1) {
+                    dataOutputStream.write(bufferOut, 0, bytes);
+                }
+            } catch (Exception e) {
+                // 文件保存出错, 抛出异常
+                throw new RuntimeException(e);
+            } finally {
+                // 关闭流
+                close(dataInputStream, dataOutputStream);
+            }
+            // 生成文件元信息对象, 并将文件的元信息保存到数据库中
+            MyFile myFile = new MyFile();
+            myFile.setId(idList.get(i));
+            myFile.setName(file[i].getOriginalFilename()
+                    .substring(0, indexOfSuffix));
+            myFile.setType(suffix.substring(1));
+            myFile.setSize(file[i].getSize());
+            myFile.setSaveAddress(fileName);
+            myFileMapper.insert(myFile);
+        }
+        return idList;
+    }
